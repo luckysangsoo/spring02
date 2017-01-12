@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않는 네임스페이스 기재 -->
+<mapper namespace="board">
+	
+	<select id="countArticle" resultType="int">
+		select count(*) from tbl_board b, tbl_member m
+		<include refid="search" />
+	</select>
+	
+	<select id="listAll" resultType="com.example.spring02.model.board.dto.BoardVO">
+		<include refid="paging_header"></include>
+		select bno,title,content,b.regdate,viewcnt,username
+		from tbl_board b, tbl_member m
+		<include refid="search"></include>
+		order by bno desc, b.regdate desc
+		<include refid="paging_footer"></include>	
+	</select>
+	
+	<insert id="insert">
+		insert into tbl_board (bno,title,content,writer)
+		values
+		((select nvl(max(bno)+1,1) from tbl_board)
+		,#{title},#{content},#{writer})
+	</insert>
+	
+	<select id="view" resultType="com.example.spring02.model.board.dto.BoardVO">
+		select bno,title,content,b.regdate,viewcnt,username,writer
+		from tbl_board b, tbl_member m
+		where b.writer=m.userid and bno=#{bno}
+	</select>
+	
+	<update id="increaseCount">
+		update tbl_board set viewcnt=viewcnt+1 where bno=#{bno}
+	</update>
+
+    <update id="updateArticle">
+    	update tbl_board
+        set title=#{title},content=#{content} where bno=#{bno}
+    </update>
+	
+	<sql id="search">
+		<choose>
+			<when test="#{search_option == 'all'}">
+				<!-- 전체 검색 -->
+				where b.writer=m.userid and 
+				( username like '%'||#{keyword}||'%' 
+				   or title like '%'||#{keyword}||'%' 
+				   or content like '%'||#{keyword}||'%' )
+			</when>
+			<otherwise>
+				<!-- 전체 검색이 아닐 떄 -->
+				where b.writer=m.userid 
+				and ${search_option} like '%'||#{keyword}||'%' 
+			</otherwise>
+		</choose>
+	</sql>
+	<sql id="paging_header">
+			select * from (
+              select rownum as rn, A.*
+              from (
+	</sql>
+	<sql id="paging_footer">
+	        ) A
+        ) where rn between #{start} and #{end}
+	</sql>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
