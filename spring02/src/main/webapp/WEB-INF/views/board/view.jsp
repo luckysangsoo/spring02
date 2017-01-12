@@ -9,6 +9,9 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
+	//listReply(); //댓글 목록 불러오기
+	listReply2();
+	
 	//댓글 쓰기 버튼
 	$("#btnReply").click(function(){
 		var replytext=$("#replytext").val();
@@ -20,6 +23,7 @@ $(document).ready(function(){
 			data: param,
 			success: function(){
 				alert("댓글이 등록 되었습니다.");
+				listReply2();
 			}
 		});	
 	});
@@ -62,7 +66,49 @@ $(document).ready(function(){
         document.form1.submit();
 	});
 });
-		
+
+function listReply(){
+	$.ajax({
+		type: "get",
+		url: "${path}/reply/list.do?bno=${dto.bno}",
+		success: function(result){
+// responseText가 result에 저장됨
+			console.log(result);
+			$("#listReply").html(result);
+		}
+	});
+}
+
+function listReply2(){
+	$.ajax({
+		type: "get",
+		contentType: "application/json",
+		url: "${path}/reply/list_json.do?bno=${dto.bno}",
+		success: function(result){
+			console.log(result);
+			var output="<table>";
+			for( var i in result) {
+				date=new Date(parseInt(result[i].regdate));
+				year=date.getFullYear();
+				month=date.getMonth();
+				day=date.getDate();
+				hour=date.getHours();
+				minute=date.getMinutes();
+				second=date.getSeconds();
+				strDate = year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second;
+					
+				output+="<tr>";
+				output+="<td>"+result[i].username;
+				output+="( "+strDate +")<br>";
+				output+=result[i].replytext+"</td>";
+				output+="</tr>";
+			}
+			output+="</table>";
+			console.log(output);
+			$("#listReply").html(output);
+		}
+	});
+}
 </script>
 </head>
 <body>
@@ -110,6 +156,7 @@ $(document).ready(function(){
 		<button type="button" id="btnReply">댓글쓰기</button>
 	</c:if>
 </div>
-
+<!-- 댓글 목록 출력 -->
+<div id="listReply"></div>
 </body>
 </html>

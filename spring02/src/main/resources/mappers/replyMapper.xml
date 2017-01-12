@@ -9,6 +9,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into tbl_reply ( rno, bno, replytext, replyer )
 		values ( reply_seq.nextval, #{bno}, #{replytext}, #{replyer})
 	</insert>
+	
+	<select id="listReply" resultType="com.example.spring02.model.board.dto.ReplyVO">
+		select rno, bno, replytext, replyer, m.username, r.regdate, r.updatedate  
+		from tbl_reply r, tbl_member m
+		where r.replyer=m.userid and bno=#{bno}
+		order by rno
+	</select>
+	
 </mapper>
 
 

@@ -11,6 +11,15 @@ public class BoardVO {
 	private Date regdate; //java.util.Date
 	private int viewcnt;
 	private String username;
+	private int cnt;
+	
+	public int getCnt() {
+		return cnt;
+	}
+	
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 	
 	public String getUsername() {
 		return username;

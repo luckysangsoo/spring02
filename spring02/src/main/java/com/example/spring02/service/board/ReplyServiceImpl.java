@@ -17,8 +17,7 @@ public class ReplyServiceImpl implements ReplyService {
 	
 	@Override
 	public List<ReplyVO> list(Integer bno) {
-		// TODO Auto-generated method stub
-		return null;
+		return replyDao.list(bno);
 	}
 
 	@Override
