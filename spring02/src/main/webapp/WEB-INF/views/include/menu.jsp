@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <a href="${path}/board/list.do">게시판</a>
+<a href="${path}/upload/uploadForm">파일업로드</a>
+<a href="${path}/upload/uploadAjax">파일업로드(ajax)</a>
+
 <c:choose>
 	<c:when test="${sessionScope.userid ==null }">
 		<a href="${path}/member/login.do">로그인</a>
