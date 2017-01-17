@@ -10,6 +10,24 @@ public class ReplyVO {
 	private String username;
 	private Date regdate; //java.util.Date
 	private Date updatedate;
+	private String secret_reply;
+	private String writer;
+	
+	public String getWriter() {
+		return writer;
+	}
+	
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+	
+	public String getSecret_reply() {
+		return secret_reply;
+	}
+	
+	public void setSecret_reply(String secret_reply) {
+		this.secret_reply = secret_reply;
+	}
 	
 	//setter, getter
 	public Integer getRno() {

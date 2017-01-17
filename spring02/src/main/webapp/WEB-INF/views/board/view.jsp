@@ -9,21 +9,31 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
-	//listReply(); //댓글 목록 불러오기
-	listReply2();
+	listReply("1"); //댓글 목록 불러오기
+	//listReply2();
 	
 	//댓글 쓰기 버튼
 	$("#btnReply").click(function(){
 		var replytext=$("#replytext").val();
 		var bno="${dto.bno}"
-		var param="replytext="+replytext+"&bno="+bno;
+		// 비밀 댓글 체크 여부
+		var secret_reply="n";
+		if($("input:checkbox[id='secret_reply']").is(":checked")){
+			secret_reply="y";
+		}
+		//alert(secret_reply);
+		
+		var param="replytext="+replytext+"&bno="+bno+"&secret_reply="+secret_reply;
+		
+		//alert(param);
 		$.ajax({
 			type: "post",
 			url: "${path}/reply/insert.do",
 			data: param,
 			success: function(){
 				alert("댓글이 등록 되었습니다.");
-				listReply2();
+				//listReply2();
+				listReply("1");
 			}
 		});	
 	});
@@ -67,10 +77,10 @@ $(document).ready(function(){
 	});
 });
 
-function listReply(){
+function listReply(num){
 	$.ajax({
 		type: "get",
-		url: "${path}/reply/list.do?bno=${dto.bno}",
+		url: "${path}/reply/list.do?bno=${dto.bno}&curPage="+num,
 		success: function(result){
 // responseText가 result에 저장됨
 			console.log(result);
@@ -153,6 +163,7 @@ function listReply2(){
 		<textarea rows="5" cols="80" id="replytext"
 		placeholder="댓글을 작성...."></textarea>
 		<br>
+		<input type="checkbox" id="secret_reply">비밀댓글
 		<button type="button" id="btnReply">댓글쓰기</button>
 	</c:if>
 </div>

@@ -2,9 +2,9 @@ package com.example.spring02.service.board;
 
 public class Pager {
 	// 페이지당 게시물 수
-	public static final int PAGE_SCALE=10;
+	public static final int PAGE_SCALE=5;
 	// 화면 하단에 보여질 페이지 수
-	public static final int BLOCK_SCALE=10;
+	public static final int BLOCK_SCALE=2;
 	private int curPage;
 	private int prevPage;
 	private int nextPage;
