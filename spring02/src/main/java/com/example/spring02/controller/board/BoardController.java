@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.spring02.controller.member.MemberController;
 import com.example.spring02.model.board.dto.BoardVO;
 import com.example.spring02.service.board.BoardService;
 import com.example.spring02.service.board.Pager;
+import com.example.spring02.service.board.ReplyService;
 
 @Controller   // 현재 클래스를 컨트롤러빈(bean)으로 등록
 public class BoardController {
@@ -30,6 +30,9 @@ public class BoardController {
 	// Ioc 의존관계 역전
 	@Inject
 	BoardService boardService;
+	@Inject
+	ReplyService replyService;
+	
 	
 	@RequestMapping("board/list.do") //  /board/list.do
 	public ModelAndView list(
@@ -101,6 +104,7 @@ public class BoardController {
 		
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("dto", boardService.read(bno));
+		mav.addObject("count", replyService.count(bno));
 		mav.addObject("curPage", curPage);
 		mav.addObject("search_option", search_option);
 		mav.addObject("keyword", keyword);

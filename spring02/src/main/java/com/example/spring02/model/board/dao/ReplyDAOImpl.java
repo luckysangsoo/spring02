@@ -34,19 +34,24 @@ public class ReplyDAOImpl implements ReplyDAO {
 
 	@Override
 	public void update(ReplyVO vo) {
-		// TODO Auto-generated method stub
+		sqlSession.update("reply.update", vo);
 		
 	}
 
 	@Override
 	public void delete(Integer rno) {
-		// TODO Auto-generated method stub
+		sqlSession.delete("reply.delete", rno);
 		
 	}
 
 	@Override
 	public int count(int bno) {
 		return sqlSession.selectOne("reply.count", bno);
+	}
+
+	@Override
+	public ReplyVO detail(int rno) {
+		return sqlSession.selectOne("reply.detail", rno);
 	}
 
 }

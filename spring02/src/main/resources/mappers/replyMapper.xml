@@ -6,6 +6,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 다른 mapper와 중복되지 않는 네임스페이스 기재 -->
 <mapper namespace="reply">
 	
+	<update id="update">
+		update tbl_reply set replytext=#{replytext}
+		where rno=#{rno}
+	</update>
+	
+	<delete id="delete">
+		delete from tbl_reply where rno=#{rno}
+	</delete>
+	
+	<select id="detail" resultType="com.example.spring02.model.board.dto.ReplyVO">
+		select * from tbl_reply where rno=#{rno}
+	</select>
+	
 	<select id="count" resultType="int">
 		select count(*) from tbl_reply where bno=#{bno}
 	</select>

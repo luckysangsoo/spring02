@@ -10,5 +10,6 @@ public interface ReplyDAO {
 	public int count(int bno);
 	public void update(ReplyVO vo);
 	public void delete(Integer rno);
+	public ReplyVO detail(int rno);
 
 }

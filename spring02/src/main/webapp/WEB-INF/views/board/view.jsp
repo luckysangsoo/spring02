@@ -9,41 +9,32 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
-	listReply("1"); //댓글 목록 불러오기
+	//listReply("1"); //댓글 목록 불러오기
+	listReply_rest("1"); // 댓글 목록 (REST 방식)
 	//listReply2();
+		
+	$("#btnModify").click(function(){
+		
+	});
 	
 	//댓글 쓰기 버튼
 	$("#btnReply").click(function(){
-		var replytext=$("#replytext").val();
-		var bno="${dto.bno}"
-		// 비밀 댓글 체크 여부
-		var secret_reply="n";
-		if($("input:checkbox[id='secret_reply']").is(":checked")){
-			secret_reply="y";
-		}
-		//alert(secret_reply);
-		
-		var param="replytext="+replytext+"&bno="+bno+"&secret_reply="+secret_reply;
-		
-		//alert(param);
-		$.ajax({
-			type: "post",
-			url: "${path}/reply/insert.do",
-			data: param,
-			success: function(){
-				alert("댓글이 등록 되었습니다.");
-				//listReply2();
-				listReply("1");
-			}
-		});	
+		// reply(); // 폼데이터로 입력
+		reply_json(); // json으로 입력
 	});
 	
 	$("#btnList").click(function(){
 		location.href="${path}/board/list.do?curPage=${curPage}&search_option=${search_option}&keyword=${keyword}";
 	});
 	
-	
 	$("#btnDelete").click(function(){
+		var count="${count}";// 댓글의 총 갯수
+		
+		if(count > 0){
+			alert("댓글이 있는 게시물은 삭제 할 수 없습니다 !");
+			return; // 함수 종료
+		}
+		
 		if(confirm("삭제하시겠습니까?")){
 			document.form1.action="${path}/board/delete.do"
 			document.form1.submit();
@@ -77,10 +68,78 @@ $(document).ready(function(){
 	});
 });
 
+function reply_json(){
+	var replytext=$("#replytext").val();
+	var bno="${dto.bno}"
+	// 비밀 댓글 체크 여부
+	var secret_reply="n";
+	if($("input:checkbox[id='secret_reply']").is(":checked")){
+		secret_reply="y";
+	}
+		
+	//alert(param);
+	$.ajax({
+		type: "post",
+		url: "${path}/reply/insert_rest.do",
+		headers: {
+			"Content-Type" : "application/json"
+		},
+		dataType: "text",
+		data: JSON.stringify({
+			bno : bno,
+			replytext : replytext,
+			secret_reply : secret_reply
+		}),
+		success: function(){
+			alert("댓글이 등록 되었습니다.");
+			//listReply2();
+			//listReply("1");
+			listReply_rest("1"); // 댓글 목록 (REST 방식)
+		}
+	});	
+}
+
+function reply(){
+	var replytext=$("#replytext").val();
+	var bno="${dto.bno}"
+	// 비밀 댓글 체크 여부
+	var secret_reply="n";
+	if($("input:checkbox[id='secret_reply']").is(":checked")){
+		secret_reply="y";
+	}
+	//alert(secret_reply);
+	
+	var param="replytext="+replytext+"&bno="+bno+"&secret_reply="+secret_reply;
+	
+	//alert(param);
+	$.ajax({
+		type: "post",
+		url: "${path}/reply/insert.do",
+		data: param,
+		success: function(){
+			alert("댓글이 등록 되었습니다.");
+			//listReply2();
+			listReply("1");
+		}
+	});	
+}
+
 function listReply(num){
 	$.ajax({
 		type: "get",
 		url: "${path}/reply/list.do?bno=${dto.bno}&curPage="+num,
+		success: function(result){
+// responseText가 result에 저장됨
+			console.log(result);
+			$("#listReply").html(result);
+		}
+	});
+}
+
+function listReply_rest(num){
+	$.ajax({
+		type: "get",
+		url: "${path}/reply/list/${dto.bno}/"+num,
 		success: function(result){
 // responseText가 result에 저장됨
 			console.log(result);
@@ -119,7 +178,38 @@ function listReply2(){
 		}
 	});
 }
+
+// 댓글 수정 버튼을 클릭 했을 떄( Modify 버튼 클릭)
+function showModify(rno){
+	$.ajax({
+		type: "get",
+		url: "${path}/reply/detail/"+rno,
+		success: function(result){
+			$("#modifyReply").html(result);
+			//alert(rno);
+			//id가 modifyReply인 태그를 천천히 화면에 표시
+			// 태그.css("속성", "값")
+			/* $("#modifyReply").show("slow"); */
+			$("#modifyReply").css("visibility","visible");
+		}
+	});
+}
 </script>
+<style>
+#modifyReply {
+	width: 300px;
+	height: 100px;
+	background-color: gray;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -50px;
+	margin-left: -150px;
+	padding: 10px;
+	z-index: 10;
+	visibility: hidden;
+}
+</style>
 </head>
 <body>
 <%@ include file="../include/menu.jsp" %>
@@ -169,5 +259,8 @@ function listReply2(){
 </div>
 <!-- 댓글 목록 출력 -->
 <div id="listReply"></div>
+<!-- 댓글 수정 화면 -->
+<div id="modifyReply">댓글 수정 화면</div>
+
 </body>
 </html>

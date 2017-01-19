@@ -51,13 +51,13 @@ public class ReplyServiceImpl implements ReplyService {
 
 	@Override
 	public void update(ReplyVO vo) {
-		// TODO Auto-generated method stub
+		replyDao.update(vo);
 		
 	}
 
 	@Override
 	public void delete(Integer rno) {
-		// TODO Auto-generated method stub
+		replyDao.delete(rno);
 		
 	}
 
@@ -70,6 +70,11 @@ public class ReplyServiceImpl implements ReplyService {
 	@Override
 	public int count(int bno) {
 		return replyDao.count(bno);
+	}
+
+	@Override
+	public ReplyVO detail(int rno) {
+		return replyDao.detail(rno);
 	}
 
 	
