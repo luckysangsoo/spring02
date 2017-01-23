@@ -24,7 +24,7 @@ public class MemberController {
 	
 	@RequestMapping("member/login.do")
 	public String login(){
-		System.out.println("여기까지 옴.");
+		
 		return "member/login"; //member/login.jsp 로 이동
 	}
 	
@@ -37,9 +37,8 @@ public class MemberController {
 		if( result == true){
 			mav.setViewName("home"); //home.jsp 로 이동
 			mav.addObject("message", "success");
-			System.out.println("login_check()" + session.getAttribute("userid"));
-			System.out.println("login_check()" + session.getAttribute("username"));
-					
+			System.out.println("login_check() -> " + "userid : " +session.getAttribute("userid") + 
+			" / username : "+ session.getAttribute("username"));
 		}else{
 			mav.setViewName("member/login"); //login.jsp 로 이동
 			mav.addObject("message", "error");
