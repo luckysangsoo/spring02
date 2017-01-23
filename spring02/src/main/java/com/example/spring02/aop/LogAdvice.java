@@ -20,20 +20,28 @@ public class LogAdvice {
 + " or execution(* com.example.spring02.model..dao.*Impl.*(..))")
 	public Object logprint(ProceedingJoinPoint joinPoint) 
 			throws Throwable {
+		long start = System.currentTimeMillis();
+		Object result = joinPoint.proceed();
 		
+		// class name
 		String type=joinPoint.getSignature().getDeclaringTypeName();
 		String name="";
 		if(type.indexOf("Controller") > -1){
 			name = "Controller \t: ";	
 		} else if (type.indexOf("Service") > -1){
-			name = "ServiceImpl \t";
+			name = "ServiceImpl \t: ";
 		} else if (type.indexOf("DAO") > -1){
-			name = "DAO \t";
+			name = "DAOImpl \t: ";
 		}
 			
 		logger.info(name+type+"."+joinPoint.getSignature().getName()+"()");
+		// 매개 변수
 		logger.info(Arrays.toString(joinPoint.getArgs()));
-		return joinPoint.proceed();
+		long end=System.currentTimeMillis();
+		long time =end-start;
+		logger.info("실행 시간 : " + time);
+		//return joinPoint.proceed();
+		return result;
 	}
 	
 	
