@@ -39,26 +39,22 @@ public class ReplyServiceImpl implements ReplyService {
 			}
 			
 		}
-		
 		return items;
 	}
 
 	@Override
 	public void create(ReplyVO vo) {
-		replyDao.create(vo);
-		
+		replyDao.create(vo);		
 	}
 
 	@Override
 	public void update(ReplyVO vo) {
-		replyDao.update(vo);
-		
+		replyDao.update(vo);		
 	}
 
 	@Override
 	public void delete(Integer rno) {
-		replyDao.delete(rno);
-		
+		replyDao.delete(rno);		
 	}
 
 	@Override
@@ -76,7 +72,5 @@ public class ReplyServiceImpl implements ReplyService {
 	public ReplyVO detail(int rno) {
 		return replyDao.detail(rno);
 	}
-
-	
 
 }

@@ -11,8 +11,7 @@ public interface BoardService {
 	public BoardVO read(int bno) throws Exception;
 	public void update(BoardVO vo) throws Exception;
 	public void delete(int bno) throws Exception;
-	public List<BoardVO> listAll(
-			int start, int end,
+	public List<BoardVO> listAll( int start, int end,
 			String search_option, String keyword) throws Exception;
 	public void increaseViewcnt(int bno, HttpSession session) throws Exception;
     //레코드 갯수 계산

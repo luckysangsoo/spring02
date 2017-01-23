@@ -28,20 +28,17 @@ public class ReplyDAOImpl implements ReplyDAO {
 
 	@Override
 	public void create(ReplyVO vo) {
-		sqlSession.insert("reply.insertReply", vo);
-		
+		sqlSession.insert("reply.insertReply", vo);		
 	}
 
 	@Override
 	public void update(ReplyVO vo) {
-		sqlSession.update("reply.update", vo);
-		
+		sqlSession.update("reply.update", vo);		
 	}
 
 	@Override
 	public void delete(Integer rno) {
-		sqlSession.delete("reply.delete", rno);
-		
+		sqlSession.delete("reply.delete", rno);		
 	}
 
 	@Override

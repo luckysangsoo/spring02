@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="listAll" resultType="com.example.spring02.model.board.dto.BoardVO">
 		<include refid="paging_header"></include>
-		select bno,title,content,b.regdate,viewcnt,username
+		select bno,title,content,b.regdate,viewcnt,username,show
 		,(select count(*) from tbl_reply where bno=b.bno) cnt
 		from tbl_board b, tbl_member m
 		<include refid="search"></include>
@@ -22,10 +22,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="insert">
-		insert into tbl_board (bno,title,content,writer)
+		insert into tbl_board (bno,title,content,writer,show)
 		values
 		((select nvl(max(bno)+1,1) from tbl_board)
-		,#{title},#{content},#{writer})
+		,#{title},#{content},#{writer},'y')
 	</insert>
 	
 	<select id="view" resultType="com.example.spring02.model.board.dto.BoardVO">
@@ -42,6 +42,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	update tbl_board
         set title=#{title},content=#{content} where bno=#{bno}
     </update>
+    
+    <!-- <delete id="deleteArtical">
+    	delete from tbl_board where bno=#{bno}
+    </delete> -->
+    
+    <update id="deleteArtical">
+    	update tbl_board set show='n' where bno=#{bno}
+    </update>
+    
+    <!-- sql code 조각
+    mybatis 조건문의 변수명에는 #을 사용하지 않는다. -->
 	
 	<sql id="search">
 		<choose>

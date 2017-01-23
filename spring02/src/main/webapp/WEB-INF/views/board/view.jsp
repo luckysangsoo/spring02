@@ -28,12 +28,12 @@ $(document).ready(function(){
 	});
 	
 	$("#btnDelete").click(function(){
-		var count="${count}";// 댓글의 총 갯수
+		/* var count="${count}";// 댓글의 총 갯수
 		
 		if(count > 0){
 			alert("댓글이 있는 게시물은 삭제 할 수 없습니다 !");
 			return; // 함수 종료
-		}
+		} */
 		
 		if(confirm("삭제하시겠습니까?")){
 			document.form1.action="${path}/board/delete.do"

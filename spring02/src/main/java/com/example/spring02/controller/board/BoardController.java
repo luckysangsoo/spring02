@@ -121,10 +121,10 @@ public class BoardController {
 		return "redirect:/board/list.do";
 	}
 	
-	@RequestMapping(value="board/delete.do", method=RequestMethod.GET)
-	public String delete(@RequestParam int bno){
+	@RequestMapping(value="board/delete.do", method=RequestMethod.POST)
+	public String delete(@RequestParam int bno) throws Exception {
 		//삭제 처리
-		
+		boardService.delete(bno);
 		//게시물 이동
 		return "redirect:/board/list.do";
 	}

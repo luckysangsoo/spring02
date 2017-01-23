@@ -68,8 +68,7 @@ public class ReplyController {
 			vo.setReplyer(userid);
 			replyService.create(vo);
 			
-			entity=new ResponseEntity<String>(
-					"success", HttpStatus.OK);
+			entity=new ResponseEntity<String>("success", HttpStatus.OK);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -89,17 +88,15 @@ public class ReplyController {
 	
 	
 	@RequestMapping("list.do")
-	public ModelAndView list(			
-			@RequestParam int bno, 
-			@RequestParam(defaultValue="1") int curPage,
-			ModelAndView mav,
-			HttpSession session){
+	public ModelAndView list(@RequestParam int bno, @RequestParam(defaultValue="1") int curPage,
+			ModelAndView mav, HttpSession session){
 		int count=replyService.count(bno); // 댓글 갯수
 		Pager pager=new Pager(count,curPage);
 		int start=pager.getPageBegin();
 		int end=pager.getPageEnd();
 				
 		List<ReplyVO> list = replyService.list(bno, start, end, session);
+		logger.info("댓글 목록 리스트 처리 중....");
 		System.out.println("댓글 목록 리스트 처리 중....");
 		// 뷰의 이름 지정
 		// WEB-INF/views/board/reply_list.jsp
@@ -125,11 +122,8 @@ public class ReplyController {
 	
 	@RequestMapping(value="/list/{bno}/{curPage}",
 			method=RequestMethod.GET)
-	public ModelAndView reply_list(
-			@PathVariable("bno") int bno,
-			@PathVariable int curPage,
-			ModelAndView mav,
-			HttpSession session){
+	public ModelAndView reply_list(	@PathVariable("bno") int bno, @PathVariable int curPage,
+			ModelAndView mav, HttpSession session){
 		int count=replyService.count(bno); // 댓글 갯수
 		Pager pager=new Pager(count,curPage);
 		int start=pager.getPageBegin();
@@ -151,9 +145,7 @@ public class ReplyController {
 	// @PathVariable : url에 입력될 변수값 지정
 	@RequestMapping(value="/detail/{rno}",
 			 method=RequestMethod.GET)
-	public ModelAndView reply_detail(
-			@PathVariable("rno") int rno,
-			ModelAndView mav){
+	public ModelAndView reply_detail( @PathVariable("rno") int rno, ModelAndView mav){
 		ReplyVO vo = replyService.detail(rno);
 		mav.setViewName("board/reply_detail");
 		mav.addObject("vo", vo);
@@ -164,9 +156,8 @@ public class ReplyController {
 	// @RequestBody : json을 입력데이터로 받음(json은 String ) json을 객체로
 	@RequestMapping(value="/update/{rno}",
 			 method={ RequestMethod.PUT, RequestMethod.PATCH} )
-	public ResponseEntity<String> update(
-			@PathVariable("rno") int rno,
-			@RequestBody ReplyVO vo ) {
+	public ResponseEntity<String> update( @PathVariable("rno") int rno, 
+			                              @RequestBody ReplyVO vo ) {
 		
 		ResponseEntity<String> entity=null;
 		try {
@@ -185,9 +176,7 @@ public class ReplyController {
 	
 	@RequestMapping(value="/delete/{rno}",
 			 method=RequestMethod.DELETE)
-	public ResponseEntity<String> delete(
-			@PathVariable("rno") int rno
-			){
+	public ResponseEntity<String> delete( @PathVariable("rno") int rno ){
 		
 		ResponseEntity<String> entity=null;
 		try {
@@ -200,7 +189,5 @@ public class ReplyController {
 		}
 		return entity;		
 	}
-	
-	
 	
 }
