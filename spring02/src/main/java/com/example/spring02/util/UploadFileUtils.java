@@ -62,9 +62,13 @@ public class UploadFileUtils {
 				uploadPath + path + File.separator + "s_" + fileName ;
 		
 		File newFile = new File(thumbnailName);
-		String formatName = fileName.substring(fileName.lastIndexOf("." + 1));
 		
+		//System.out.println("thumbnailName : " + thumbnailName);
+		//System.out.println("fileName : " + fileName);
+		String formatName = fileName.substring(fileName.lastIndexOf(".")+1);
+		//System.out.println("formatName : " + formatName);
 		// 썸네일 생성
+		//System.out.println(formatName.toUpperCase());
 		ImageIO.write(
 				destImg, formatName.toUpperCase(), newFile);
 		// 썸네일의 이름을 리턴 함.

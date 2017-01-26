@@ -8,9 +8,16 @@
 <%@ include file="../include/header.jsp" %>
 </head>
 <body>
-<%@ include file="../include/menu.jsp" %>
+<%//@ include file="../include/menu.jsp" %>
 
 파일이 업로드 되었습니다.<br>
-파일명 : ${saveName}
+파일명 : ${savedName}
+
+<script>
+var result="${savedName}"
+parent.addfilePath(result);
+</script>
+
+
 </body>
 </html>
