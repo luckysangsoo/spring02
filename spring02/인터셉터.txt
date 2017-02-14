@@ -1,0 +1,57 @@
+* interceptor(인터셉터) - 요청을 가로채는 작업(전후)
+	매개변수 - HttpServletRequest, HttpServletResponse
+	용도 - 로그인 처리
+	
+	sessionCheck.jsp를 이용해서 하고 있지만 인터셉터를 사용하는 것이 장점이다.
+    PC웹, Mobile웹
+    PC웹, Mobile웹 어떻게 알까요? Header를 보고 서버에서 판단하게 됨.
+  
+
+Filter(필터) - DispatcherServlet 이전에 실행
+DispatcherServlet을 쓰고 있어요.
+스프링에서 Filter를 제어하지 않는다.
+
+
+AOP - around, 매개변수가 JoinPoint, ProceedingJoinPoint
+
+실행순서 : Filter -> DispatcherServlet -> interceptor -> AOP
+
+
+----------------------------------------------------------------
+
+<!-- 인터셉터 설정 -->
+	<beans:bean id="sampleInterceptor"
+	class="com.example.spring02.interceptor.SampleInterceptor">
+	</beans:bean>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/doA"/>
+			<beans:ref bean="sampleInterceptor" />
+		</interceptor>
+	</interceptors>
+	
+ /doA 요청이 들어 오면  sampleInterceptor bean을 먼저 실행한다.
+ 
+----------------------------------------------------------------	
+
+14:21:56.245 [http-nio-8080-exec-3] INFO [com.example.spring02.aop.LogAdvice.logprint:42]-실행 시간 : 28
+pre handle ............
+14:22:02.797 [http-nio-8080-exec-4] INFO [com.example.spring02.HomeController.doA:41]-doA .....
+post handle ............
+pre handle ............
+14:22:07.145 [http-nio-8080-exec-5] INFO [com.example.spring02.HomeController.doB:47]-doB .....
+post handle ............
+
+----------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+

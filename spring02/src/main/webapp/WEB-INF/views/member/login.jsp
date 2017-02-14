@@ -43,6 +43,11 @@ $(document).ready(function(){
 	<tr>
 		<td colspan="2" align="center">
 			<button type="button" id="btnLogin">로그인</button>
+<c:if test="${param.message == 'nologin' }">
+	<div style="color:red;">
+		먼저 로그인하세요.
+	</div>
+</c:if>
 <c:if test="${message == 'error' }">
 	<div style="color:red;">
 		아이디 또는 비밀번호가 일치하지 않습니다.

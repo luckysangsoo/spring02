@@ -17,6 +17,13 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 
+	<!-- mapping : 가상 경로(상대경로)
+	location : 리소스가 실제로 저장된 경로 -->
+	<resources location="/WEB-INF/views/include/" 
+		mapping="/include/**" />
+	<resources location="/WEB-INF/views/images/" 
+		mapping="/images/**" />
+
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
@@ -38,5 +45,32 @@
 		<beans:constructor-arg value="E:\upload" />
 	</beans:bean>
 	
+	<!-- 인터셉터 설정 -->
+	<beans:bean id="sampleInterceptor"
+	class="com.example.spring02.interceptor.SampleInterceptor">
+	</beans:bean>
 	
+	<beans:bean id="LoginInterceptor"
+	 class="com.example.spring02.interceptor.LoginInterceptor">
+	</beans:bean>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/board/write.do"/>
+			<mapping path="/board/insert.do"/>
+			<mapping path="/board/update.do"/>
+			<mapping path="/board/delete.do"/>
+			<mapping path="/shop/cart/insert.do"/>
+			<mapping path="/shop/cart/list.do"/>
+			<beans:ref bean="LoginInterceptor" />
+		</interceptor>
+	
+		<interceptor>
+			<mapping path="/doA"/>
+			<mapping path="/doB"/>
+			<!-- board 하위 url에 인터셉터 적용 -->
+			<mapping path="/board/**"/>
+			<beans:ref bean="sampleInterceptor" />
+		</interceptor>
+	</interceptors>
 </beans:beans>

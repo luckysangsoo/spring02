@@ -1,0 +1,7 @@
+* 상품관리
+
+com.example.spring02.model.shop.dto
+com.example.spring02.model.shop.dao
+com.example.spring02.service.shop
+com.example.spring02.controller.shop
+

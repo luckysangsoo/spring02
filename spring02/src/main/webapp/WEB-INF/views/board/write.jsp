@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@ include file="../include/header.jsp" %>
-<%@ include file="../include/session_check.jsp" %>
+<%-- <%@ include file="../include/session_check.jsp" %> --%>
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#btnSave").click(function(){

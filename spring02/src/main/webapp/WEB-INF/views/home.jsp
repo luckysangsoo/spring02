@@ -15,5 +15,6 @@
 </c:if>
 
 <P>  The time on the server is ${serverTime}. </P>
+${result}
 </body>
 </html>

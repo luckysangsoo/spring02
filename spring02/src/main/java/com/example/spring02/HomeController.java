@@ -36,4 +36,17 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping("/doA")
+	public String doA(){
+		logger.info("doA .....");
+		return "home";
+	}
+	
+	@RequestMapping("/doB")
+	public String doB(Model model){
+		logger.info("doB .....");
+		model.addAttribute("result", "do b result");
+		return "home";
+		
+	}
 }
