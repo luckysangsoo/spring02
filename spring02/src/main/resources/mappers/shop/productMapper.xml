@@ -16,6 +16,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from product where product_id=#{product_id}
 	</select>
 	
+	<insert id="insert">
+		insert into product values 
+		(seq_product.nextval,#{product_name},#{price},#{description},#{picture_url})
+	</insert>
+	
 </mapper>
 
 

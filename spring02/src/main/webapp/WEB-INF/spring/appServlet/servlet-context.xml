@@ -54,7 +54,20 @@
 	 class="com.example.spring02.interceptor.LoginInterceptor">
 	</beans:bean>
 	
+	<beans:bean id="adminInterceptor"
+	 class="com.example.spring02.interceptor.AdminInterceptor">
+	</beans:bean>
+	
 	<interceptors>
+	    <!-- 관리자 세션 체크를 위한 인터셉터 설정 -->
+	    <interceptor>
+	    	<!-- <mapping path="/admin/login.do"/> login.do를 체크하면 아예 로그인을 하지 못한다.
+	        <mapping path="/admin/login_Check.do"/>
+	         --><mapping path="/shop/product/write.do"/>
+	        <mapping path="/shop/product/insert.do"/>
+	    	<beans:ref bean="adminInterceptor"/>
+	    </interceptor>
+		
 		<interceptor>
 			<mapping path="/board/write.do"/>
 			<mapping path="/board/insert.do"/>

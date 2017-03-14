@@ -37,4 +37,10 @@ public class ProductDAOImpl implements ProductDAO {
 
 	}
 
+	@Override
+	public void insertProduct(ProductVO vo) {
+		sqlSession.insert("product.insert", vo);
+		
+	}
+
 }

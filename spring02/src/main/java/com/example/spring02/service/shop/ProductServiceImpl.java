@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.example.spring02.model.shop.dao.ProductDAO;
+import com.example.spring02.model.shop.dto.CartVO;
 import com.example.spring02.model.shop.dto.ProductVO;
 
 @Service
@@ -36,5 +37,13 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public void insertProduct(ProductVO vo) {
+		productDao.insertProduct(vo);
+		
+	}
+
+	
 
 }

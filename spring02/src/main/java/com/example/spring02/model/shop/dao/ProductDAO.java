@@ -9,5 +9,6 @@ public interface ProductDAO {
 	ProductVO detailProduct(int product_id);
 	void updateProduct(ProductVO vo);
 	void deleteProduct(int product_id);
+	void insertProduct(ProductVO vo);
 
 }

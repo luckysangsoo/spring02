@@ -2,6 +2,7 @@ package com.example.spring02.service.shop;
 
 import java.util.List;
 
+import com.example.spring02.model.shop.dto.CartVO;
 import com.example.spring02.model.shop.dto.ProductVO;
 
 public interface ProductService {
@@ -9,5 +10,6 @@ public interface ProductService {
 	ProductVO detailProduct(int product_id);
 	void updateProduct(ProductVO vo);
 	void deleteProduct(int product_id);
+	void insertProduct(ProductVO vo);
 
 }
