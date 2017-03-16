@@ -1,10 +1,16 @@
 package com.example.spring02.controller.board;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -14,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.spring02.model.board.dto.BoardVO;
@@ -77,8 +84,7 @@ public class BoardController {
 	
 	@RequestMapping(value="board/insert.do", method=RequestMethod.POST)
 	public String insert(@ModelAttribute BoardVO vo,
-			HttpSession session)
-	throws Exception {
+			HttpSession session) throws Exception {
 		//세션에 저장된 아이디를 조회 가져와서 저장
 		String writer = (String)session.getAttribute("userid");
 		vo.setWriter(writer);
@@ -129,4 +135,49 @@ public class BoardController {
 		return "redirect:/board/list.do";
 	}
 	
+	@RequestMapping(value="board/imageUpload.do", method=RequestMethod.POST)
+	public void imageUpload(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam MultipartFile upload) throws Exception {
+		// http header 설정
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset-utf-8");
+		
+		logger.info("imageUpload................");
+		
+		OutputStream out=null; // java.io, 서버로 파일을 올릴 떄는 OutputStream
+		PrintWriter printWriter=null; // java.io
+		// 업로드한 파일 이름
+		String fileName=upload.getOriginalFilename();
+		//logger.info(fileName);
+		
+		byte[] bytes=upload.getBytes();
+		// 배포경로를 적어줘야합니다.
+		// String uploadPath = "업로드 디렉토리";
+		// 배포경로 찾는 방법
+		// Servers -> 마우스 오른쪽 버튼 클릭 -> Browse Deployment Location
+		// E:\workspace-sts-3.8.2.RELEASE\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\spring02\WEB-INF\views\images
+		// 배포 디렉토리
+		
+		String uploadPath = 
+		"E:\\workspace-sts-3.8.2.RELEASE\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp1\\wtpwebapps\\spring02\\WEB-INF\\views\\images\\" + fileName;
+		logger.info(uploadPath);
+		
+		out=new FileOutputStream(new File(uploadPath)); // java.io
+		// 서버에 저장됨.
+		out.write(bytes);
+		
+		String callback=request.getParameter("CKEditorFuncNum");
+		printWriter=response.getWriter();
+			
+		String fileUrl=request.getContextPath()+"/images/"+fileName;
+		logger.info("request.getContextPath()================" + request.getContextPath());
+		logger.info("fileUrl============= : " + fileUrl);
+		
+		printWriter.println(
+		"<script>window.parent.CKEDITOR.tools.callFunction("
+			+ callback+",'"+fileUrl+"','이미지가 업로드되었습니다.')"
+			+ "</script>");
+		//스트림 닫기
+		printWriter.flush();
+	}
 }

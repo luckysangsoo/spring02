@@ -30,6 +30,9 @@ public class AdminController {
 			// 관리자 세션 변수 추가
 			session.setAttribute("admin_userid", vo.getUserid());
 			session.setAttribute("admin_username", name);
+			session.setAttribute("userid", vo.getUserid());
+			session.setAttribute("username", name);
+			
 			mav.setViewName("admin/admin");
 			mav.addObject("message", "success");
 		}else{ // 로그인 실패

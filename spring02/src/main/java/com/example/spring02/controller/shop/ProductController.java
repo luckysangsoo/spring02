@@ -65,7 +65,7 @@ public class ProductController {
 			productService.insertProduct(vo);
 			
 		}
-		return "redirect:/admin/product/list.do";
+		return "redirect:/shop/product/list.do";
 	}
 
 }

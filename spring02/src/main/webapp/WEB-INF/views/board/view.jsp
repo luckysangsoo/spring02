@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@ include file="../include/header.jsp" %>
+<script src="${path}/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	
@@ -230,8 +231,11 @@ function showModify(rno){
 </div>
 <div>
     내용
-    <textarea name="content" rows="3" cols="80"
-    placeholder="내용을 입력하세요">${dto.content}</textarea>	
+    <textarea id="content" name="content" rows="3" cols="80"
+    placeholder="내용을 입력하세요">${dto.content}</textarea>
+<script>
+CKEDITOR.replace("content");
+</script>	
 </div>
 <div>
     이름 : ${dto.username}

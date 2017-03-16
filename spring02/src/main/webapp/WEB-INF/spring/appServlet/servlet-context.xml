@@ -23,6 +23,9 @@
 		mapping="/include/**" />
 	<resources location="/WEB-INF/views/images/" 
 		mapping="/images/**" />
+	<!-- ckeditor 관련 설정 -->
+	<resources location="/WEB-INF/views/ckeditor/" 
+		mapping="/ckeditor/**" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

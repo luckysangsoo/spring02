@@ -6,11 +6,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@ include file="../include/header.jsp" %>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("btnAdd").click(function(){
+		location.href="${path}/shop/product/write.do";
+	});
+});
+</script>
 </head>
 <body>
 <%@ include file="../include/menu.jsp" %>
 
 <h2>상품목록</h2>
+<c:if test="${sessionScope.admin_userid != null }">
+	<button type="button" id="btnAdd">상품등록</button>
+</c:if>
 <table border="1">
 	<tr>
 		<th>상품ID</th>

@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <%@ include file="../include/header.jsp" %>
 <%-- <%@ include file="../include/session_check.jsp" %> --%>
+<script src="${path}/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#btnSave").click(function(){
@@ -19,11 +20,11 @@ $(document).ready(function(){
         	document.form.writer.focus();
         	return
         } */
-        if(content==""){
+        /* if(content==""){
         	alert("내용을 입력하세요");
         	document.form.writer.focus();
         	return
-        }
+        } */
         if(title==""){
         	alert("제목을 입력하세요");
         	document.form.writer.focus();
@@ -42,18 +43,27 @@ $(document).ready(function(){
 <form name="form1" method="post" action="${path}/board/insert.do">
 <div>
     제목
-    <input name="title" id="title" size="80" placeholder="제목을 입력하세요">	
+    <input name="title" id="title" size="104" placeholder="제목을 입력하세요">	
 </div>
-<div>
+<div style="width:800px">
     내용
-    <textarea name="content" rows="3" cols="80"
-    placeholder="내용을 입력하세요"></textarea>	
+    <textarea id="content" name="content" rows="12" cols="80"
+    placeholder="내용을 입력하세요"></textarea>
+    <!-- textarea를 스마트에디터로 변경 -->
+<script>
+// CKEDITOR.replace("content")
+// 이미지 업로드를 할 경우
+CKEDITOR.replace("content", {
+	filebrowserUploadUrl : "${path}/board/imageUpload.do"
+});
+</script>  <!-- "content" 태그의 id -->	
 </div>
 <!-- <div>
     이름
     <input name="writer" placeholder="이름을 입력하세요">	
 </div> -->
-<div style="width:700px; text-align: center;">
+<div style="width:800px; text-align: center;">
+	<br>
 	<button type="button" id="btnSave">확 인</button>
 </div>
 
